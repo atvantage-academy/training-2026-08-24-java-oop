@@ -20,4 +20,12 @@ public class Ausleihe {
     System.out.println("Ausleihe beendet: " + fahrrad.typ + " - " + kunde.name + " - bis " + ende);
   }
 
+  @Override
+  public String toString() {
+    return "Ausleihe{" +
+      "kunde=" + kunde +
+      ", fahrrad=" + fahrrad +
+      ", start=" + start +
+      '}';
+  }
 }
