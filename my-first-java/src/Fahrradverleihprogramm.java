@@ -32,6 +32,11 @@ public class Fahrradverleihprogramm {
 
     heidiMitMountainBike.beenden();
 
+    System.out.println(heidiMitMountainBike);
+    System.out.println(olafMitEbike);
+
+    System.out.println(heidiMitMountainBike.fahrrad);
+    System.out.println(mountainBike);
 
   }
 
