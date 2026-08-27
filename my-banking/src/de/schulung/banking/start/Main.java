@@ -1,31 +1,41 @@
+package de.schulung.banking.start;
+
+import de.schulung.banking.daten.Konto;
+import de.schulung.banking.daten.Kunde;
+
+import java.time.LocalDate;
+import java.time.Month;
+
 public class Main {
 
     public static void main(String[] args) {
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
         // sieht man, was eine Instanzvariable ausmacht.
-        Kunde ada = new Kunde();
-        ada.nummer = 1001;
-        ada.name = "Ada Lovelace";
-        ada.wohnort = "London";
 
-        Kunde alan = new Kunde();
-        alan.nummer = 1002;
-        alan.name = "Alan Turing";
-        alan.wohnort = "Wilmslow";
+        Kunde ada = new Kunde(
+          1001,
+          LocalDate.of(1970, Month.JANUARY, 1)
+        );
+        ada.setName("Ada Lovelace");
+        ada.setWohnort("London");
+
+        Kunde alan = new Kunde(
+          1002,
+          LocalDate.of(1995, Month.JULY, 15)
+        );
+        alan.setName("Alan Turing");
+        alan.setWohnort("Wilmslow");
 
         // Ada hat zwei Konten, Alan eines: die Multiplizität 1 zu * aus dem
         // Diagramm, hier zum ersten Mal sichtbar.
-        Konto adaGiro = new Konto();
-        adaGiro.iban = "DE02 1203 0000 0000 2020 51";
-        adaGiro.inhaber = ada;
+        Konto adaGiro = new Konto("DE02 1203 0000 0000 2020 51");
+        adaGiro.setInhaber(ada);
 
-        Konto adaSpar = new Konto();
-        adaSpar.iban = "DE02 5001 0517 0648 4898 90";
-        adaSpar.inhaber = ada;
+        Konto adaSpar = new Konto("DE02 5001 0517 0648 4898 90");
+        adaSpar.setInhaber(ada);
 
-        Konto alanGiro = new Konto();
-        alanGiro.iban = "DE02 1001 0010 0000 0123 45";
-        alanGiro.inhaber = alan;
+        Konto alanGiro = new Konto("DE02 1001 0010 0000 0123 45");
+        alanGiro.setInhaber(alan);
 
         System.out.println("--- Kundschaft ---");
         System.out.println(ada);
@@ -56,6 +66,11 @@ public class Main {
 
         // Die Referenz zeigt auf DASSELBE Objekt, nicht auf eine Kopie: Beide
         // Konten von Ada geben nach dem Umzug den neuen Wohnort her.
-        System.out.println("Inhaberin des Sparkontos wohnt jetzt in: " + adaSpar.inhaber.wohnort);
+        System.out.println("Inhaberin des Sparkontos wohnt jetzt in: " + adaSpar.getInhaber().getWohnort());
+
+        // ada.setNummer(999);
+        System.out.println(adaGiro.getStandInCent());
+        // adaGiro.standInCent = -2000;
+        // adaGiro.setStandInCent(-2000);
     }
 }
