@@ -1,3 +1,5 @@
+package de.schulung;
+
 public class Main {
 
 
