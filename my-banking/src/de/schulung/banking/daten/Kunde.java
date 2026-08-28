@@ -1,6 +1,7 @@
 package de.schulung.banking.daten;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 // Ein Kästchen aus dem Klassendiagramm, eins zu eins übersetzt.
 //
@@ -27,7 +28,19 @@ public class Kunde {
         setWohnort(neuerWohnort);
     }
 
-    @Override
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Kunde kunde = (Kunde) o;
+    return nummer == kunde.nummer;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(nummer);
+  }
+
+  @Override
     public String toString() {
         return "de.schulung.banking.daten.Kunde " + getNummer() + " – " + getName() + " aus " + getWohnort();
     }
