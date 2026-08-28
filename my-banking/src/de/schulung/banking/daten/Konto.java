@@ -3,7 +3,7 @@ package de.schulung.banking.daten;
 // Das zweite Kästchen. Die Linie zum Kunden ist hier unten als Referenz
 // umgesetzt: Ein de.schulung.banking.daten.Konto HAT einen Inhaber, und "hat" heisst im Code, dass eine
 // Instanzvariable auf das andere Objekt zeigt.
-public class Konto {
+public abstract class Konto {
 
     private final String iban;
 
@@ -29,13 +29,19 @@ public class Konto {
         this.standInCent = neuerStand;
     }
 
-  // "Abheben nur, solange genug Guthaben vorhanden ist" – die Regel aus dem
+    public boolean isAbhebenMöglich(long betragInCent) {
+      return betragInCent <= getStandInCent();
+    }
+
+    // "Abheben nur, solange genug Guthaben vorhanden ist" – die Regel aus dem
     // Anforderungstext, an der Stelle geprüft, an der sie hingehört: im de.schulung.banking.daten.Konto.
     // Dass der Aufrufer nicht erfährt, wenn nichts passiert ist, ist
     // unbefriedigend. Das saubere Werkzeug dafür sind Ausnahmen, Tag 4.
     public void abheben(long betragInCent) {
-        if (betragInCent <= getStandInCent()) {
+        if (isAbhebenMöglich(betragInCent)) {
             setStandInCent(getStandInCent() - betragInCent);
+        } else {
+          System.out.println("Abheben nicht möglich");
         }
     }
 
