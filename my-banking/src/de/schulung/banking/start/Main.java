@@ -1,5 +1,6 @@
 package de.schulung.banking.start;
 
+import de.schulung.banking.daten.Bank;
 import de.schulung.banking.daten.Konto;
 import de.schulung.banking.daten.Kunde;
 
@@ -12,12 +13,16 @@ public class Main {
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
         // sieht man, was eine Instanzvariable ausmacht.
 
+        Bank myBank = new Bank(200, 100);
+        Bank bank2 = new Bank();
+
         Kunde ada = new Kunde(
           1001,
           LocalDate.of(1970, Month.JANUARY, 1)
         );
         ada.setName("Ada Lovelace");
         ada.setWohnort("London");
+        myBank.addKunde(ada);
 
         Kunde alan = new Kunde(
           1002,
@@ -25,17 +30,21 @@ public class Main {
         );
         alan.setName("Alan Turing");
         alan.setWohnort("Wilmslow");
+        myBank.addKunde(alan);
 
         // Ada hat zwei Konten, Alan eines: die Multiplizität 1 zu * aus dem
         // Diagramm, hier zum ersten Mal sichtbar.
         Konto adaGiro = new Konto("DE02 1203 0000 0000 2020 51");
         adaGiro.setInhaber(ada);
+        myBank.addKonto(adaGiro);
 
         Konto adaSpar = new Konto("DE02 5001 0517 0648 4898 90");
         adaSpar.setInhaber(ada);
+        myBank.addKonto(adaSpar);
 
         Konto alanGiro = new Konto("DE02 1001 0010 0000 0123 45");
         alanGiro.setInhaber(alan);
+        myBank.addKonto(alanGiro);
 
         System.out.println("--- Kundschaft ---");
         System.out.println(ada);
@@ -72,5 +81,6 @@ public class Main {
         System.out.println(adaGiro.getStandInCent());
         // adaGiro.standInCent = -2000;
         // adaGiro.setStandInCent(-2000);
+
     }
 }
