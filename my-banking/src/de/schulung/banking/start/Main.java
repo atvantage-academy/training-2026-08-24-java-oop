@@ -1,8 +1,10 @@
 package de.schulung.banking.start;
 
 import de.schulung.banking.daten.Bank;
+import de.schulung.banking.daten.Girokonto;
 import de.schulung.banking.daten.Konto;
 import de.schulung.banking.daten.Kunde;
+import de.schulung.banking.daten.Sparkonto;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -34,16 +36,18 @@ public class Main {
 
         // Ada hat zwei Konten, Alan eines: die Multiplizität 1 zu * aus dem
         // Diagramm, hier zum ersten Mal sichtbar.
-        Konto adaGiro = new Konto("DE02 1203 0000 0000 2020 51");
+        Girokonto adaGiro = new Girokonto("DE02 1203 0000 0000 2020 51");
         adaGiro.setInhaber(ada);
+        adaGiro.setDispoLimitInCent(500_00);
         myBank.addKonto(adaGiro);
 
-        Konto adaSpar = new Konto("DE02 5001 0517 0648 4898 90");
+        Konto adaSpar = new Sparkonto("DE02 5001 0517 0648 4898 90", 1.5);
         adaSpar.setInhaber(ada);
         myBank.addKonto(adaSpar);
 
-        Konto alanGiro = new Konto("DE02 1001 0010 0000 0123 45");
+        Girokonto alanGiro = new Girokonto("DE02 1001 0010 0000 0123 45");
         alanGiro.setInhaber(alan);
+        alanGiro.setDispoLimitInCent(50_00);
         myBank.addKonto(alanGiro);
 
         System.out.println("--- Kundschaft ---");
@@ -60,8 +64,8 @@ public class Main {
         System.out.println(alanGiro);
 
         // Abheben bis zur Höhe des Guthabens: geht.
-        adaGiro.abheben(50_00);
-        System.out.println("Nach Abhebung von 50,00 €: " + adaGiro);
+        adaGiro.abheben(650_00);
+        System.out.println("Nach Abhebung von 650,00 €: " + adaGiro);
 
         // Mehr abheben, als da ist: passiert nichts, der Stand bleibt gültig.
         adaGiro.abheben(999_00);
