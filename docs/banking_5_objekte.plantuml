@@ -1,0 +1,96 @@
+@startuml
+title Banking – Objekte am Ende von main() (Stand PR #7)
+
+!pragma layout smetana
+left to right direction
+
+package "main() – lokale Variablen" {
+    object "myBank : Bank" as v_myBank
+    object "bank2 : Bank" as v_bank2
+    object "ada : Kunde" as v_ada
+    object "alan : Kunde" as v_alan
+    object "adaGiro : Girokonto" as v_adaGiro
+    object "adaSpar : Konto" as v_adaSpar
+    object "alanGiro : Girokonto" as v_alanGiro
+}
+
+object ":Bank" as b1
+object ":Konto[200]" as b1konten {
+    [3] … [199] = null
+}
+object ":Kunde[100]" as b1kunden {
+    [2] … [99] = null
+}
+
+object ":Bank" as b2
+object ":Konto[100]" as b2konten {
+    [0] … [99] = null
+}
+object ":Kunde[50]" as b2kunden {
+    [0] … [49] = null
+}
+
+object ":Kunde" as k1 {
+    nummer = 1001
+    birthdate = 1970-01-01
+    name = "Ada Lovelace"
+    wohnort = "Paris"
+}
+object ":Kunde" as k2 {
+    nummer = 1002
+    birthdate = 1995-07-15
+    name = "Alan Turing"
+    wohnort = "Wilmslow"
+}
+
+object ":Girokonto" as g1 {
+    iban = "DE02 1203 0000 0000 2020 51"
+    standInCent = -50000
+    dispoLimitInCent = 50000
+}
+object ":Sparkonto" as s1 {
+    iban = "DE02 5001 0517 0648 4898 90"
+    standInCent = 250000
+    habenZins = 1.5
+}
+object ":Girokonto" as g2 {
+    iban = "DE02 1001 0010 0000 0123 45"
+    standInCent = 8000
+    dispoLimitInCent = 5000
+}
+
+v_myBank --> b1
+v_bank2 --> b2
+v_ada -----> k1
+v_alan -----> k2
+v_adaGiro ----> g1
+v_adaSpar ----> s1
+v_alanGiro ----> g2
+
+b1 --> b1konten : konten
+b1 --> b1kunden : kunden
+b2 --> b2konten : konten
+b2 --> b2kunden : kunden
+
+b1konten --> g1 : [0]
+b1konten --> s1 : [1]
+b1konten --> g2 : [2]
+b1kunden --> k1 : [0]
+b1kunden --> k2 : [1]
+
+g1 --> k1 : inhaber
+s1 --> k1 : inhaber
+g2 --> k2 : inhaber
+
+note bottom of k1
+    4 Referenzen auf dasselbe Objekt:
+    ada, kunden[0],
+    adaGiro.inhaber, adaSpar.inhaber
+end note
+
+note right of s1
+    Variable adaSpar ist vom Typ Konto,
+    das Objekt ist ein Sparkonto.
+end note
+
+@enduml
