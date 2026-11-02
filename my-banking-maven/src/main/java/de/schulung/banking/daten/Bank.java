@@ -21,7 +21,20 @@ public class Bank {
     return konten;
   }
 
+  public Konto findeKontoByIban(String iban) {
+    for (Konto konto : konten) {
+      if (konto != null && konto.getIban().equals(iban)) {
+        return konto;
+      }
+    }
+    return null;
+  }
+
   public void addKonto(Konto konto) {
+    if(findeKontoByIban(konto.getIban()) != null) {
+      System.out.println("Konto mit IBAN " + konto.getIban() + " existiert bereits.");
+      return;
+    }
     boolean isKundeDerBank = findKundeByKundennummer(konto.getInhaber().getNummer()) != null;
     // Konto nur hinzufügen, wenn Inhaber bereits Kunde der Bank ist
     if(isKundeDerBank) {
@@ -31,7 +44,7 @@ public class Bank {
       for(int i=0; i< konten.length; i++) {
         if(konten[i] == null) {
           konten[i] = konto;
-          break;
+          return;
         }
       }
       System.out.println("Die Bank ist leider schon voll. Kein weiteres Konto möglich.");
