@@ -16,9 +16,14 @@ package "main() – lokale Variablen" {
 
 object ":Bank" as b1
 object ":Konto[200]" as b1konten {
+    [0] = Referenz
+    [1] = Referenz
+    [2] = Referenz
     [3] … [199] = null
 }
 object ":Kunde[100]" as b1kunden {
+    [0] = Referenz
+    [1] = Referenz
     [2] … [99] = null
 }
 
@@ -59,24 +64,24 @@ object ":Girokonto" as g2 {
     dispoLimitInCent = 5000
 }
 
-v_myBank --> b1
-v_bank2 --> b2
-v_ada -----> k1
-v_alan -----> k2
-v_adaGiro ----> g1
-v_adaSpar ----> s1
-v_alanGiro ----> g2
+v_myBank -[#1565C0]-> b1
+v_bank2 -[#1565C0]-> b2
+v_ada -[#1565C0]----> k1
+v_alan -[#1565C0]----> k2
+v_adaGiro -[#1565C0]---> g1
+v_adaSpar -[#1565C0]---> s1
+v_alanGiro -[#1565C0]---> g2
 
 b1 --> b1konten : konten
 b1 --> b1kunden : kunden
 b2 --> b2konten : konten
 b2 --> b2kunden : kunden
 
-b1konten --> g1 : [0]
-b1konten --> s1 : [1]
-b1konten --> g2 : [2]
-b1kunden --> k1 : [0]
-b1kunden --> k2 : [1]
+b1konten -[#2E7D32,bold]-> g1 : <color:#2E7D32>konten[0]</color>
+b1konten -[#2E7D32,bold]-> s1 : <color:#2E7D32>konten[1]</color>
+b1konten -[#2E7D32,bold]-> g2 : <color:#2E7D32>konten[2]</color>
+b1kunden -[#2E7D32,bold]-> k1 : <color:#2E7D32>kunden[0]</color>
+b1kunden -[#2E7D32,bold]-> k2 : <color:#2E7D32>kunden[1]</color>
 
 g1 --> k1 : inhaber
 s1 --> k1 : inhaber
@@ -88,9 +93,22 @@ note bottom of k1
     adaGiro.inhaber, adaSpar.inhaber
 end note
 
+note top of b2
+    bank2 = new Bank():
+    nichts hinzugefügt,
+    Arrays bleiben leer
+end note
+
 note right of s1
     Variable adaSpar ist vom Typ Konto,
     das Objekt ist ein Sparkonto.
 end note
+
+legend bottom left
+    <color:#1565C0>——</color>  Referenz aus einer lokalen Variable von main()
+    <color:#2E7D32>——</color>  Referenz aus dem Array der Bank – entsteht durch
+          myBank.addKonto(...) bzw. myBank.addKunde(...)
+    ——  Referenz aus einem Feld (konten, kunden, inhaber)
+endlegend
 
 @enduml
