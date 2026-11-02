@@ -16,25 +16,35 @@ nachvollziehbar.
 Zum Starten `my-banking-maven` in der IDE als Maven-Projekt öffnen und
 `de.schulung.banking.start.Main` ausführen.
 
+## Die Schritte im Seminar
+
+Jeder Pull Request ist ein Schritt im Seminar. Die Diagramme dazu zeigen den
+Stand nach dem jeweiligen Schritt.
+
+| PR | Zweck | Diagramm |
+|----|-------|----------|
+| [#1](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/1) | Fahrradverleih: erste eigene Klassen mit Feldern und Beziehungen | [`fahrradverleih_1`](docs/fahrradverleih_1.svg) |
+| [#2](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/2) | `toString()` für eine lesbare Ausgabe auf der Konsole | [`fahrradverleih_2`](docs/fahrradverleih_2.svg) |
+| [#3](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/3) | Banking: Konto und Kunde aus dem Klassendiagramm | [`banking_1`](docs/banking_1.svg) |
+| [#4](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/4) | Kapselung und Geheimnisprinzip: `private`, Konstruktoren, Getter/Setter, Pakete | [`banking_2`](docs/banking_2.svg), [`fahrradverleih_3`](docs/fahrradverleih_3.svg), [`buero_1`](docs/buero_1.svg) |
+| [#5](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/5) | Bank verwaltet Konten und Kunden in Arrays | [`banking_3`](docs/banking_3.svg) |
+| [#6](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/6) | Bank findet Kunden und Konten; `equals`/`hashCode` für Kunden | [`banking_4`](docs/banking_4.svg) |
+| [#7](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/7) | Vererbung: Girokonto und Sparkonto erben von Konto | [`banking_5`](docs/banking_5.svg), [`banking_5_objekte`](docs/banking_5_objekte.svg) |
+| [#8](https://github.com/atvantage-academy/training-2026-08-24-java-oop/pull/8) | Banking als Maven-Projekt | – (Modell unverändert) |
+
 ## Diagramme
 
 Die Diagramme liegen in [`docs`](docs) – jeweils als PlantUML-Quelle
 (`.plantuml`) und als fertiges Bild (`.svg`). Zum Ansehen genügt das SVG.
 
-| Diagramm | Stand |
-|----------|-------|
-| [`fahrradverleih_1`](docs/fahrradverleih_1.svg) | PR #1 – Klassen, Felder, Beziehungen |
-| [`fahrradverleih_2`](docs/fahrradverleih_2.svg) | PR #2 – `toString()` |
-| [`fahrradverleih_3`](docs/fahrradverleih_3.svg) | PR #4 – Kapselung, Konstruktoren, Getter/Setter |
-| [`buero_1`](docs/buero_1.svg) | PR #4 – Stift und Tisch, gekapselt |
-| [`banking_1`](docs/banking_1.svg) | PR #3 – Konto und Kunde |
-| [`banking_2`](docs/banking_2.svg) | PR #4 – Kapselung |
-| [`banking_3`](docs/banking_3.svg) | PR #5 – Bank mit Arrays |
-| [`banking_4`](docs/banking_4.svg) | PR #6 – Suchen, `equals`/`hashCode` |
-| [`banking_5`](docs/banking_5.svg) | PR #7 – Vererbung |
-| [`banking_5_objekte`](docs/banking_5_objekte.svg) | Objektdiagramm: welche Objekte es am Ende von `main()` gibt und wie sie verdrahtet sind |
+Das Klassendiagramm zum Banking-Beispiel nach PR #7:
 
 ![Klassendiagramm Banking, Stand PR #7](docs/banking_5.svg)
+
+Das Objektdiagramm dazu zeigt, welche Objekte es am Ende von `main()` gibt
+und welche Variablen und Felder auf sie verweisen:
+
+![Objektdiagramm Banking, Stand PR #7](docs/banking_5_objekte.svg)
 
 ### Diagramme selbst umwandeln
 
