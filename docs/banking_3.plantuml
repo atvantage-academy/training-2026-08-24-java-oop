@@ -1,0 +1,48 @@
+@startuml
+title Banking – PR #5 (Bank)
+
+class Bank {
+    -anzahlKonten: int
+    -anzahlKunden: int
+    ----
+    +Bank()
+    +Bank(maximumAnzahlKonten: int, maximumAnzahlKunden: int)
+    +getKonten(): Konto[]
+    +addKonto(konto: Konto)
+    +getKunden(): Kunde[]
+    +addKunde(kunde: Kunde)
+}
+
+class Kunde {
+    -nummer: int {readOnly}
+    -birthdate: LocalDate {readOnly}
+    -name: String
+    -wohnort: String
+    ----
+    +Kunde(nummer: int, birthdate: LocalDate)
+    +ziehtUm(neuerWohnort: String)
+    +toString(): String
+}
+
+class Konto {
+    -iban: String {readOnly}
+    -standInCent: long
+    ----
+    +Konto(iban: String)
+    +einzahlen(betragInCent: long)
+    +abheben(betragInCent: long)
+    +toString(): String
+}
+
+note right of Kunde
+    Getter und Setter
+    von Kunde und Konto
+    wie in banking_2
+    (hier ausgeblendet)
+end note
+
+Bank "1" --> "0..*" Konto : konten
+Bank "1" --> "0..*" Kunde : kunden
+Konto "0..*" --> "1" Kunde : inhaber
+
+@enduml

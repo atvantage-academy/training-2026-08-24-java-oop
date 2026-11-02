@@ -1,0 +1,50 @@
+@startuml
+title Fahrradverleih – PR #4 (Kapselung)
+
+class Fahrrad {
+    -rahmennummer: String {readOnly}
+    -typ: String {readOnly}
+    -tagespreis: int
+    ----
+    +Fahrrad(rahmennummer: String, typ: String)
+    +toString(): String
+    +getRahmennummer(): String
+    +getTyp(): String
+    +getTagespreis(): int
+    +setTagespreis(tagespreis: int)
+}
+
+class Kunde {
+    -name: String
+    -telefonnummer: String
+    ----
+    +toString(): String
+    +getName(): String
+    +setName(name: String)
+    +getTelefonnummer(): String
+    +setTelefonnummer(telefonnummer: String)
+}
+
+class Ausleihe {
+    -start: LocalDate
+    -geplantesEnde: LocalDate
+    -ende: LocalDate
+    ----
+    +Ausleihe(kunde: Kunde, fahrrad: Fahrrad)
+    +beginnen()
+    +beenden()
+    +toString(): String
+    +getKunde(): Kunde
+    +getFahrrad(): Fahrrad
+    +getStart(): LocalDate
+    +setStart(start: LocalDate)
+    +getGeplantesEnde(): LocalDate
+    +setGeplantesEnde(geplantesEnde: LocalDate)
+    +getEnde(): LocalDate
+    +setEnde(ende: LocalDate)
+}
+
+Ausleihe "0..*" --> "1" Kunde : kunde {readOnly}
+Ausleihe "0..*" --> "1" Fahrrad : fahrrad {readOnly}
+
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+title Büro – PR #4 (Kapselung)
+
+class Stift {
+    -farbe: String
+    -länge: int
+    -gewicht: int
+    ----
+    +schreiben()
+    +getFarbe(): String
+    +setFarbe(farbe: String)
+    +getLänge(): int
+    +setLänge(länge: int)
+    +getGewicht(): int
+    +setGewicht(gewicht: int)
+    +getPosition(): Tisch
+    +setPosition(position: Tisch)
+}
+
+class Tisch {
+    -farbe: String
+    -höhe: int
+    -höhenVerstellbar: boolean
+    ----
+    +getFarbe(): String
+    +setFarbe(farbe: String)
+    +getHöhe(): int
+    +setHöhe(höhe: int)
+    +isHöhenVerstellbar(): boolean
+    +setHöhenVerstellbar(höhenVerstellbar: boolean)
+}
+
+Stift "0..*" --> "0..1" Tisch : position
+
+@enduml

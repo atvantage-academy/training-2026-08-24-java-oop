@@ -1,0 +1,27 @@
+@startuml
+title Fahrradverleih – PR #1
+
+class Fahrrad {
+    ~rahmennummer: String
+    ~typ: String
+    ~tagespreis: int
+}
+
+class Kunde {
+    ~name: String
+    ~telefonnummer: String
+}
+
+class Ausleihe {
+    ~start: LocalDate
+    ~geplantesEnde: LocalDate
+    ~ende: LocalDate
+    ----
+    ~beginnen()
+    ~beenden()
+}
+
+Ausleihe "0..*" --> "1" Kunde : kunde
+Ausleihe "0..*" --> "1" Fahrrad : fahrrad
+
+@enduml

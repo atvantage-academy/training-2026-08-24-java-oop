@@ -1,0 +1,38 @@
+@startuml
+title Banking – PR #4 (Kapselung)
+
+class Kunde {
+    -nummer: int {readOnly}
+    -birthdate: LocalDate {readOnly}
+    -name: String
+    -wohnort: String
+    ----
+    +Kunde(nummer: int, birthdate: LocalDate)
+    +ziehtUm(neuerWohnort: String)
+    +toString(): String
+    +getNummer(): int
+    +getBirthdate(): LocalDate
+    +getName(): String
+    +setName(name: String)
+    +getWohnort(): String
+    +setWohnort(wohnort: String)
+}
+
+class Konto {
+    -iban: String {readOnly}
+    -standInCent: long
+    ----
+    +Konto(iban: String)
+    +einzahlen(betragInCent: long)
+    +abheben(betragInCent: long)
+    +toString(): String
+    +getIban(): String
+    +getStandInCent(): long
+    -setStandInCent(neuerStand: long)
+    +getInhaber(): Kunde
+    +setInhaber(inhaber: Kunde)
+}
+
+Konto "0..*" --> "1" Kunde : inhaber
+
+@enduml

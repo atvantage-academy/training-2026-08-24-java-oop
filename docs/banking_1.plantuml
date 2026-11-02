@@ -1,0 +1,24 @@
+@startuml
+title Banking – PR #3
+
+class Kunde {
+    ~nummer: int
+    ~name: String
+    ~wohnort: String
+    ----
+    ~ziehtUm(neuerWohnort: String)
+    +toString(): String
+}
+
+class Konto {
+    ~iban: String
+    ~standInCent: long
+    ----
+    ~einzahlen(betragInCent: long)
+    ~abheben(betragInCent: long)
+    +toString(): String
+}
+
+Konto "0..*" --> "1" Kunde : inhaber
+
+@enduml

@@ -1,0 +1,74 @@
+@startuml
+title Banking – PR #7 (Vererbung)
+
+class Bank {
+    +Bank()
+    +Bank(maximumAnzahlKonten: int, maximumAnzahlKunden: int)
+    +getKonten(): Konto[]
+    +addKonto(konto: Konto)
+    +getKunden(): Kunde[]
+    +addKunde(kunde: Kunde)
+    +findKundeByKundennummer(kundenNummer: int): Kunde
+    +findKontenByKunde(kundenNummer: int): Konto[]
+    +findKontenByKunde(kunde: Kunde): Konto[]
+}
+
+class Kunde {
+    -nummer: int {readOnly}
+    -birthdate: LocalDate {readOnly}
+    -name: String
+    -wohnort: String
+    ----
+    +Kunde(nummer: int, birthdate: LocalDate)
+    +ziehtUm(neuerWohnort: String)
+    +equals(o: Object): boolean
+    +hashCode(): int
+    +toString(): String
+}
+
+abstract class Konto {
+    -iban: String {readOnly}
+    -standInCent: long
+    ----
+    +Konto(iban: String)
+    +einzahlen(betragInCent: long)
+    +abheben(betragInCent: long)
+    +isAbhebenMöglich(betragInCent: long): boolean
+    +toString(): String
+}
+
+class Girokonto {
+    -dispoLimitInCent: long
+    ----
+    +Girokonto(iban: String)
+    +isAbhebenMöglich(betragInCent: long): boolean
+    +getDispoLimitInCent(): long
+    +setDispoLimitInCent(dispoLimitInCent: long)
+}
+
+class Sparkonto {
+    -habenZins: double {readOnly}
+    ----
+    +Sparkonto(iban: String, habenZins: double)
+    +getHabenZins(): double
+}
+
+note right of Kunde
+    Getter und Setter
+    von Kunde und Konto
+    wie in banking_2
+    (hier ausgeblendet)
+end note
+
+note bottom of Girokonto
+    isAbhebenMöglich():
+    stand - betrag >= -dispoLimit
+end note
+
+Bank "1" --> "0..*" Konto : konten
+Bank "1" --> "0..*" Kunde : kunden
+Konto "0..*" --> "1" Kunde : inhaber
+Konto <|-- Girokonto
+Konto <|-- Sparkonto
+
+@enduml
