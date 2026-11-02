@@ -3,4 +3,3 @@
 **/out
 **/*.class
 **/.DS_Store
-/.tools/plantuml.jar
