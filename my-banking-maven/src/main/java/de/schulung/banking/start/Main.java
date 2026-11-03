@@ -8,6 +8,7 @@ import de.schulung.banking.daten.KontoNichtGedecktException;
 import de.schulung.banking.daten.Kunde;
 import de.schulung.banking.daten.Sparkonto;
 import de.schulung.banking.daten.UnbekannterInhaberException;
+import de.schulung.banking.daten.Waehrung;
 import org.apache.logging.log4j.LogManager;
 
 import java.time.LocalDate;
@@ -18,6 +19,8 @@ public class Main {
     public static void main(String[] args) throws UnbekannterInhaberException, KontoExistiertSchonException {
       LogManager.getLogger(Main.class);
 
+        Waehrung euro = new Waehrung("EUR", "Euro");
+        System.out.println(euro.name());
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
         // sieht man, was eine Instanzvariable ausmacht.
 
