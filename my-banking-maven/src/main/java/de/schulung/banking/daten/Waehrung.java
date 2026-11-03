@@ -1,5 +1,6 @@
 package de.schulung.banking.daten;
 
+@Deprecated
 public record Waehrung(
   String code,
   String name

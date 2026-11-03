@@ -19,6 +19,7 @@ public class Main {
     public static void main(String[] args) throws UnbekannterInhaberException, KontoExistiertSchonException {
       LogManager.getLogger(Main.class);
 
+        @SuppressWarnings("deprecation")
         Waehrung euro = new Waehrung("EUR", "Euro");
         System.out.println(euro.name());
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
