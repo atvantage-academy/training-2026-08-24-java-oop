@@ -2,10 +2,12 @@ package de.schulung.banking.daten;
 
 import de.schulung.banking.daten.Kunde;
 
+import java.util.Objects;
+
 // Das zweite Kästchen. Die Linie zum Kunden ist hier unten als Referenz
 // umgesetzt: Ein de.schulung.banking.daten.Konto HAT einen Inhaber, und "hat" heisst im Code, dass eine
 // Instanzvariable auf das andere Objekt zeigt.
-public abstract class Konto {
+public abstract class Konto implements Comparable<Konto> {
 
     private final String iban;
 
@@ -67,4 +69,21 @@ public abstract class Konto {
     public void setInhaber(Kunde inhaber) {
       this.inhaber = inhaber;
     }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Konto konto = (Konto) o;
+    return Objects.equals(iban, konto.iban);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(iban);
+  }
+
+  @Override
+  public int compareTo(Konto o) {
+    return iban.compareTo(o.iban);
+  }
 }
