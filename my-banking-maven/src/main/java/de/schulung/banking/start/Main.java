@@ -4,6 +4,7 @@ import de.schulung.banking.daten.Bank;
 import de.schulung.banking.daten.Girokonto;
 import de.schulung.banking.daten.Konto;
 import de.schulung.banking.daten.KontoExistiertSchonException;
+import de.schulung.banking.daten.KontoNichtGedecktException;
 import de.schulung.banking.daten.Kunde;
 import de.schulung.banking.daten.Sparkonto;
 import de.schulung.banking.daten.UnbekannterInhaberException;
@@ -26,7 +27,9 @@ public class Main {
         // bank2.findeKontoByIban(null);
 
         Konto falschesKonto = new Girokonto("DE02 1203 0000 0000 2020 51");
+        /*
         try {
+          // wirft IllegalArgumentException
           bank2.addKonto(falschesKonto);
         } catch (UnbekannterInhaberException e) {
           e.printStackTrace();
@@ -34,6 +37,7 @@ public class Main {
         } catch (KontoExistiertSchonException e) {
           e.printStackTrace();
         }
+        */
 
       Kunde ada = new Kunde(
           1001,
@@ -81,11 +85,19 @@ public class Main {
         System.out.println(alanGiro);
 
         // Abheben bis zur Höhe des Guthabens: geht.
-        adaGiro.abheben(650_00);
+        try {
+          adaGiro.abheben(650_00);
+        } catch (KontoNichtGedecktException e) {
+          e.printStackTrace();
+        }
         System.out.println("Nach Abhebung von 650,00 €: " + adaGiro);
 
         // Mehr abheben, als da ist: passiert nichts, der Stand bleibt gültig.
-        adaGiro.abheben(999_00);
+        try {
+          adaGiro.abheben(999_00);
+        } catch (KontoNichtGedecktException e) {
+          e.printStackTrace();
+        }
         System.out.println("Nach Versuch über 999,00 €: " + adaGiro);
 
         System.out.println();
