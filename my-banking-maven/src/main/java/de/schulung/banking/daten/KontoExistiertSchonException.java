@@ -1,5 +1,8 @@
 package de.schulung.banking.daten;
 
+import lombok.Getter;
+
+@Getter
 public class KontoExistiertSchonException extends Exception {
 
   private final Konto konto;
@@ -9,7 +12,4 @@ public class KontoExistiertSchonException extends Exception {
     this.konto = konto;
   }
 
-  public Konto getKonto() {
-    return konto;
-  }
 }

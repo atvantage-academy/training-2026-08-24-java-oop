@@ -1,5 +1,8 @@
 package de.schulung.banking.daten;
 
+import lombok.Getter;
+
+@Getter
 public class UnbekannterInhaberException extends Exception {
 
   private final Kunde kunde;
@@ -11,10 +14,6 @@ public class UnbekannterInhaberException extends Exception {
   public UnbekannterInhaberException(String message, Kunde kunde) {
     super(message);
     this.kunde = kunde;
-  }
-
-  public Kunde getKunde() {
-    return kunde;
   }
 
 }

@@ -1,5 +1,8 @@
 package de.schulung.banking.daten;
 
+import lombok.Getter;
+
+@Getter
 public class KontoNichtGedecktException extends Exception {
 
   private final Konto konto;
@@ -9,14 +12,6 @@ public class KontoNichtGedecktException extends Exception {
     super("Konto nicht gedeckt");
     this.konto = konto;
     this.betragInCent = betragInCent;
-  }
-
-  public Konto getKonto() {
-    return konto;
-  }
-
-  public long getBetragInCent() {
-    return betragInCent;
   }
 
 }
