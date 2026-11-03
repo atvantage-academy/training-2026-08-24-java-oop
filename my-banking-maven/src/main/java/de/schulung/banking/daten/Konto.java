@@ -21,6 +21,9 @@ public abstract class Konto implements Comparable<Konto> {
     // und keine Liste.
     private Kunde inhaber;
 
+    // erlaubte Werte: aktiv, gesperrt, geschlossen
+    private KontoStatus status = KontoStatus.AKTIV;
+
     public Konto(String iban) {
       if(iban == null) {
         throw new IllegalArgumentException("IBAN darf nicht null sein");
@@ -54,6 +57,14 @@ public abstract class Konto implements Comparable<Konto> {
         if(betragInCent <= 0) {
           throw new IllegalArgumentException("Abhebungsbetrag muss positiv sein");
         }
+        // if(status != KontoStatus.AKTIV) {
+        if(!status.isKontoBewegungErlaubt()) {
+          throw new IllegalStateException("Abheben nur möglich, wenn Konto aktiv ist");
+        }
+        // switch (status) {
+        //  case GESCHLOSSEN: case GESPERRT:
+        //    throw new IllegalStateException("Abheben nicht möglich");
+        // }
         if (isAbhebenMöglich(betragInCent)) {
             setStandInCent(getStandInCent() - betragInCent);
         } else {
@@ -97,5 +108,16 @@ public abstract class Konto implements Comparable<Konto> {
   @Override
   public int compareTo(Konto o) {
     return iban.compareTo(o.iban);
+  }
+
+  public KontoStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(KontoStatus status) {
+    if(status == null) {
+      throw new IllegalArgumentException("Status darf nicht null sein");
+    }
+    this.status = status;
   }
 }
