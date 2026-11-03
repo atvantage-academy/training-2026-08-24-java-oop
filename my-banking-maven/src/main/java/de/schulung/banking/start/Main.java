@@ -3,8 +3,11 @@ package de.schulung.banking.start;
 import de.schulung.banking.daten.Bank;
 import de.schulung.banking.daten.Girokonto;
 import de.schulung.banking.daten.Konto;
+import de.schulung.banking.daten.KontoExistiertSchonException;
+import de.schulung.banking.daten.KontoNichtGedecktException;
 import de.schulung.banking.daten.Kunde;
 import de.schulung.banking.daten.Sparkonto;
+import de.schulung.banking.daten.UnbekannterInhaberException;
 import org.apache.logging.log4j.LogManager;
 
 import java.time.LocalDate;
@@ -12,7 +15,7 @@ import java.time.Month;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnbekannterInhaberException, KontoExistiertSchonException {
       LogManager.getLogger(Main.class);
 
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
@@ -21,7 +24,22 @@ public class Main {
         Bank myBank = new Bank();
         Bank bank2 = new Bank();
 
-        Kunde ada = new Kunde(
+        // bank2.findeKontoByIban(null);
+
+        Konto falschesKonto = new Girokonto("DE02 1203 0000 0000 2020 51");
+        /*
+        try {
+          // wirft IllegalArgumentException
+          bank2.addKonto(falschesKonto);
+        } catch (UnbekannterInhaberException e) {
+          e.printStackTrace();
+          // e.getKunde()
+        } catch (KontoExistiertSchonException e) {
+          e.printStackTrace();
+        }
+        */
+
+      Kunde ada = new Kunde(
           1001,
           LocalDate.of(1970, Month.JANUARY, 1)
         );
@@ -67,11 +85,19 @@ public class Main {
         System.out.println(alanGiro);
 
         // Abheben bis zur Höhe des Guthabens: geht.
-        adaGiro.abheben(650_00);
+        try {
+          adaGiro.abheben(650_00);
+        } catch (KontoNichtGedecktException e) {
+          e.printStackTrace();
+        }
         System.out.println("Nach Abhebung von 650,00 €: " + adaGiro);
 
         // Mehr abheben, als da ist: passiert nichts, der Stand bleibt gültig.
-        adaGiro.abheben(999_00);
+        try {
+          adaGiro.abheben(999_00);
+        } catch (KontoNichtGedecktException e) {
+          e.printStackTrace();
+        }
         System.out.println("Nach Versuch über 999,00 €: " + adaGiro);
 
         System.out.println();

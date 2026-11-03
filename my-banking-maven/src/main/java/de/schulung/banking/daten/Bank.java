@@ -16,6 +16,9 @@ public class Bank {
   }
 
   public Konto findeKontoByIban(String iban) {
+    if(iban == null) {
+      throw new IllegalArgumentException("IBAN darf nicht null sein");
+    }
     for (Konto konto : konten) {
       if (konto != null && konto.getIban().equals(iban)) {
         return konto;
@@ -24,16 +27,22 @@ public class Bank {
     return null;
   }
 
-  public void addKonto(Konto konto) {
+  public void addKonto(Konto konto) throws UnbekannterInhaberException, KontoExistiertSchonException {
+    if(konto == null) {
+      throw new IllegalArgumentException("Konto darf nicht null sein");
+    }
+    if(konto.getInhaber() == null) {
+      throw new IllegalArgumentException("Inhaber darf nicht null sein");
+    }
     // Duplikate finden: Versuch mit add(..) -> false
     boolean isKundeDerBank = findKundeByKundennummer(konto.getInhaber().getNummer()) != null;
     // Konto nur hinzufügen, wenn Inhaber bereits Kunde der Bank ist
     if(isKundeDerBank) {
       if(!konten.add(konto)) {
-        System.out.println("Konto mit IBAN " + konto.getIban() + " existiert bereits.");
+        throw new KontoExistiertSchonException(konto);
       }
     } else {
-      System.out.println("Inhaber des Kontos ist NICHT Kunde der Bank");
+      throw new UnbekannterInhaberException(konto.getInhaber());
     }
   }
 

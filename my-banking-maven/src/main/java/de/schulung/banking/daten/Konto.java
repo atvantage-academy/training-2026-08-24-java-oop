@@ -22,10 +22,16 @@ public abstract class Konto implements Comparable<Konto> {
     private Kunde inhaber;
 
     public Konto(String iban) {
+      if(iban == null) {
+        throw new IllegalArgumentException("IBAN darf nicht null sein");
+      }
       this.iban = iban;
     }
 
     public void einzahlen(long betragInCent) {
+      if(betragInCent <= 0) {
+        throw new IllegalArgumentException("Einzahlungsbetrag muss positiv sein");
+      }
         setStandInCent(getStandInCent() + betragInCent);
     }
 
@@ -34,6 +40,9 @@ public abstract class Konto implements Comparable<Konto> {
     }
 
     public boolean isAbhebenMöglich(long betragInCent) {
+      if(betragInCent <= 0) {
+        throw new IllegalArgumentException("Abhebungsbetrag muss positiv sein");
+      }
       return betragInCent <= getStandInCent();
     }
 
@@ -41,11 +50,14 @@ public abstract class Konto implements Comparable<Konto> {
     // Anforderungstext, an der Stelle geprüft, an der sie hingehört: im de.schulung.banking.daten.Konto.
     // Dass der Aufrufer nicht erfährt, wenn nichts passiert ist, ist
     // unbefriedigend. Das saubere Werkzeug dafür sind Ausnahmen, Tag 4.
-    public void abheben(long betragInCent) {
+    public void abheben(long betragInCent) throws KontoNichtGedecktException {
+        if(betragInCent <= 0) {
+          throw new IllegalArgumentException("Abhebungsbetrag muss positiv sein");
+        }
         if (isAbhebenMöglich(betragInCent)) {
             setStandInCent(getStandInCent() - betragInCent);
         } else {
-          System.out.println("Abheben nicht möglich");
+          throw new KontoNichtGedecktException(this, betragInCent);
         }
     }
 
