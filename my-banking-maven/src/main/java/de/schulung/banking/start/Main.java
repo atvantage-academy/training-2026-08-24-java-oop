@@ -18,7 +18,7 @@ public class Main {
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
         // sieht man, was eine Instanzvariable ausmacht.
 
-        Bank myBank = new Bank(200, 100);
+        Bank myBank = new Bank(200);
         Bank bank2 = new Bank();
 
         Kunde ada = new Kunde(
@@ -88,6 +88,8 @@ public class Main {
         System.out.println(adaGiro.getStandInCent());
         // adaGiro.standInCent = -2000;
         // adaGiro.setStandInCent(-2000);
+
+      bank2.getKunden().add(new Kunde(1, LocalDate.of(2000, Month.JANUARY, 1)));
 
     }
 }

@@ -1,20 +1,23 @@
 package de.schulung.banking.daten;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+
 public class Bank {
 
   private final Konto[] konten;
-  private final Kunde[] kunden;
+  private final Collection<Kunde> kunden = new HashSet<>();
 
   // private int anzahlKonten = 0;
   // private int anzahlKunden = 0;
 
   public Bank() {
-    this(100, 50);
+    this(100);
   }
 
-  public Bank(int maximumAnzahlKonten, int maximumAnzahlKunden) {
+  public Bank(int maximumAnzahlKonten) {
     konten = new Konto[maximumAnzahlKonten];
-    kunden = new Kunde[maximumAnzahlKunden];
   }
 
   public Konto[] getKonten() {
@@ -53,21 +56,16 @@ public class Bank {
     }
   }
 
-  public Kunde[] getKunden() {
-    return kunden;
+  public Collection<Kunde> getKunden() {
+    return Collections.unmodifiableCollection(kunden);
   }
 
   public void addKunde(Kunde kunde) {
-    // kunden[anzahlKunden] = kunde;
-    // anzahlKunden = anzahlKunden + 1;
-    // for-Schleife, erste Stelle suchen, die null ist
-    for(int i=0; i< kunden.length; i++) {
-      if(kunden[i] == null) {
-        kunden[i] = kunde;
-        break;
-      }
+    if(kunde == null) {
+      System.out.println("Kunde darf nicht null sein");
+      return;
     }
-    System.out.println("Die Bank ist leider schon voll. Kein weiterer Kunde möglich.");
+    kunden.add(kunde);
   }
 
   public Kunde findKundeByKundennummer(int kundenNummer) {
@@ -77,7 +75,7 @@ public class Bank {
       // || - logisches OR
       // ! - NOT
       // z.B. !x && y || z
-      if(kunde != null && kunde.getNummer() == kundenNummer) {
+      if(kunde.getNummer() == kundenNummer) {
           return kunde;
       }
     }
