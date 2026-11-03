@@ -1,27 +1,18 @@
 package de.schulung.banking.daten;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class Bank {
 
-  private final Konto[] konten;
+  private final Collection<Konto> konten = new TreeSet<>();
   private final Collection<Kunde> kunden = new HashSet<>();
 
-  // private int anzahlKonten = 0;
-  // private int anzahlKunden = 0;
-
-  public Bank() {
-    this(100);
-  }
-
-  public Bank(int maximumAnzahlKonten) {
-    konten = new Konto[maximumAnzahlKonten];
-  }
-
-  public Konto[] getKonten() {
-    return konten;
+  public Collection<Konto> getKonten() {
+    return Collections.unmodifiableCollection(konten);
   }
 
   public Konto findeKontoByIban(String iban) {
@@ -34,23 +25,13 @@ public class Bank {
   }
 
   public void addKonto(Konto konto) {
-    if(findeKontoByIban(konto.getIban()) != null) {
-      System.out.println("Konto mit IBAN " + konto.getIban() + " existiert bereits.");
-      return;
-    }
+    // Duplikate finden: Versuch mit add(..) -> false
     boolean isKundeDerBank = findKundeByKundennummer(konto.getInhaber().getNummer()) != null;
     // Konto nur hinzufügen, wenn Inhaber bereits Kunde der Bank ist
     if(isKundeDerBank) {
-      // konten[anzahlKonten] = konto;
-      // anzahlKonten = anzahlKonten + 1;
-      // for-Schleife, erste Stelle suchen, die null ist
-      for(int i=0; i< konten.length; i++) {
-        if(konten[i] == null) {
-          konten[i] = konto;
-          return;
-        }
+      if(!konten.add(konto)) {
+        System.out.println("Konto mit IBAN " + konto.getIban() + " existiert bereits.");
       }
-      System.out.println("Die Bank ist leider schon voll. Kein weiteres Konto möglich.");
     } else {
       System.out.println("Inhaber des Kontos ist NICHT Kunde der Bank");
     }
@@ -82,43 +63,26 @@ public class Bank {
     return null;
   }
 
-  public Konto[] findKontenByKunde(int kundenNummer) {
+  public Collection<Konto> findKontenByKunde(int kundenNummer) {
     Kunde kunde = findKundeByKundennummer(kundenNummer);
     if(kunde != null) {
       return findKontenByKunde(kunde);
     } else {
-      return new Konto[0];
+      return Collections.emptyList();
     }
   }
 
-  public Konto[] findKontenByKunde(Kunde kunde) {
+  public Collection<Konto> findKontenByKunde(Kunde kunde) {
     // Logik
 
-    Konto[] result = new Konto[konten.length];
-    int index = 0;
+    Collection<Konto> result = new ArrayList<>();
     for(Konto konto: konten) {
       // if(konto.getInhaber().getNummer() == kunde.getNummer()) {
       if(konto != null && konto.getInhaber().equals(kunde)) {
-        result[index] = konto;
-        index = index +1;
+        result.add(konto);
       }
     }
-
-    // Array ist so groß wie die gesamte Anzahl an Konten
-    // Rückgabewert ist das Array mit Konten UND leeren Feldern
-    // z.B. { konto1, konto2, null, null, null, ....}
-    //return result;
-
-    Konto[] besseresResult = new Konto[index];
-    // gefundene Einträge kopieren
-    // for(int i=0; i < index; i++) {
-    //   besseresResult[i] = result[i];
-    // }
-    if(index > 0) {
-      System.arraycopy(result, 0, besseresResult, 0, index);
-    }
-
-    return besseresResult;
+    return result;
 
   }
 

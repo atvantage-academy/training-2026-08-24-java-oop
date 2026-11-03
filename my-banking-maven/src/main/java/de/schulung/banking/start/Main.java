@@ -18,7 +18,7 @@ public class Main {
         // Zwei Objekte DERSELBEN Klasse mit unterschiedlichen Werten – daran
         // sieht man, was eine Instanzvariable ausmacht.
 
-        Bank myBank = new Bank(200);
+        Bank myBank = new Bank();
         Bank bank2 = new Bank();
 
         Kunde ada = new Kunde(
