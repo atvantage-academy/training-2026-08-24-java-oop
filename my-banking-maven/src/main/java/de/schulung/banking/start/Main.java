@@ -119,7 +119,8 @@ public class Main {
         // adaGiro.standInCent = -2000;
         // adaGiro.setStandInCent(-2000);
 
-      bank2.getKunden().add(new Kunde(1, LocalDate.of(2000, Month.JANUARY, 1)));
+      // geht nicht mehr, weil Stream statt Collection
+      // bank2.getKunden().add(new Kunde(1, LocalDate.of(2000, Month.JANUARY, 1)));
 
     }
 }
