@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 public class Bank {
 
   private final Collection<Konto> konten = new TreeSet<>();
   private final Collection<Kunde> kunden = new HashSet<>();
 
-  public Collection<Konto> getKonten() {
-    return Collections.unmodifiableCollection(konten);
+  public Stream<Konto> getKonten() {
+    return konten.stream();
   }
 
-  public Konto findeKontoByIban(String iban) {
+  public Optional<Konto> findeKontoByIban(String iban) {
     if(iban == null) {
       throw new IllegalArgumentException("IBAN darf nicht null sein");
     }
-    for (Konto konto : konten) {
-      if (konto != null && konto.getIban().equals(iban)) {
-        return konto;
-      }
-    }
-    return null;
+    return konten
+      .stream()
+      .filter(konto -> konto != null && konto.getIban().equals(iban))
+      .findFirst();
   }
 
   public void addKonto(Konto konto) throws UnbekannterInhaberException, KontoExistiertSchonException {
@@ -46,8 +46,8 @@ public class Bank {
     }
   }
 
-  public Collection<Kunde> getKunden() {
-    return Collections.unmodifiableCollection(kunden);
+  public Stream<Kunde> getKunden() {
+    return kunden.stream();
   }
 
   public void addKunde(Kunde kunde) {
@@ -58,41 +58,26 @@ public class Bank {
     kunden.add(kunde);
   }
 
-  public Kunde findKundeByKundennummer(int kundenNummer) {
-    for(Kunde kunde : kunden) {
-      // && - logisches UND
-      // wenn erster Ausdruck falsch -> zweiter Ausdruck wird NICHT ausgewertet
-      // || - logisches OR
-      // ! - NOT
-      // z.B. !x && y || z
-      if(kunde.getNummer() == kundenNummer) {
-          return kunde;
-      }
-    }
-    return null;
+  public Optional<Kunde> findKundeByKundennummer(int kundenNummer) {
+    return kunden
+      .stream()
+      .filter(kunde -> kunde != null && kunde.getNummer() == kundenNummer)
+      .findFirst();
   }
 
-  public Collection<Konto> findKontenByKunde(int kundenNummer) {
-    Kunde kunde = findKundeByKundennummer(kundenNummer);
-    if(kunde != null) {
-      return findKontenByKunde(kunde);
+  public Stream<Konto> findKontenByKunde(int kundenNummer) {
+    Optional<Kunde> kunde = findKundeByKundennummer(kundenNummer);
+    if(kunde.isPresent()) {
+      return findKontenByKunde(kunde.get());
     } else {
-      return Collections.emptyList();
+      return Stream.empty();
     }
   }
 
-  public Collection<Konto> findKontenByKunde(Kunde kunde) {
-    // Logik
-
-    Collection<Konto> result = new ArrayList<>();
-    for(Konto konto: konten) {
-      // if(konto.getInhaber().getNummer() == kunde.getNummer()) {
-      if(konto != null && konto.getInhaber().equals(kunde)) {
-        result.add(konto);
-      }
-    }
-    return result;
-
+  public Stream<Konto> findKontenByKunde(Kunde kunde) {
+    return konten
+      .stream()
+      .filter(konto -> konto != null && konto.getInhaber().equals(kunde));
   }
 
 }
