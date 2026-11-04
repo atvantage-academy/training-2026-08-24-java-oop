@@ -1,5 +1,8 @@
 package de.schulung.banking.daten;
 
+import lombok.Getter;
+
+@Getter
 public class Sparkonto extends Konto {
 
   private final double habenZins;
@@ -9,7 +12,4 @@ public class Sparkonto extends Konto {
     this.habenZins = habenZins;
   }
 
-  public double getHabenZins() {
-    return habenZins;
-  }
 }

@@ -1,7 +1,10 @@
 package de.schulung.banking.daten;
 
-import de.schulung.banking.daten.Konto;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Girokonto extends Konto {
 
   private long dispoLimitInCent;
@@ -14,11 +17,4 @@ public class Girokonto extends Konto {
     return getStandInCent() - betragInCent >= -dispoLimitInCent;
   }
 
-  public long getDispoLimitInCent() {
-    return dispoLimitInCent;
-  }
-
-  public void setDispoLimitInCent(long dispoLimitInCent) {
-    this.dispoLimitInCent = dispoLimitInCent;
-  }
 }
