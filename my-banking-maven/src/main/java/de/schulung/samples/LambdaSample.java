@@ -77,6 +77,10 @@ public class LambdaSample {
     System.out.println(add3(() -> Math.random()));
     // Sonderfall: Parameter stimmen überein
     System.out.println(add3(Math::random)); // Method Reference Operator
+    // Verzögerte Ausführung im Vergleich:
+    System.out.println(add(Math.random(), Math.random())); // 2x random(), add, println
+    System.out.println(add3(Math::random)); // add, ?-mal random(), println
+
 
   }
 
